@@ -14,14 +14,31 @@ class Joke extends Component {
     }
 
     render() {
+        const jokeStyle = {
+            font: 'ariel',
+            fontColor : 'blue',
+            fontSize: "36",
+            paddingTop: "175px",
+            paddingBottom: "175px",
+            paddingLeft: '600px',
+            paddingRight: '600px',
+            cursor: 'pointer'
+        };
 
         return (
             <div>
-                <p>{this.props.line}</p>
+                <p style={jokeStyle}>
+                    <font color="#8b0000" fontSize="30">
+                        <strong>
+                            {this.props.line}
+                        </strong>
+                    </font>
+                </p>
             </div>
         )
     }
 
 }
 
+//<img src="https://i.imgflip.com/10s86s.jpg" position="absolute" width = "556px" height={"417px "}/>
 export default Joke;

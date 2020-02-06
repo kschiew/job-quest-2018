@@ -8,7 +8,7 @@ class App extends Component {
         super();
         this.state = {
             jokes: [],
-            number: 5,
+            number: 3,
             firstName: "Chuck",
             lastName: "Norris",
         };
@@ -16,7 +16,7 @@ class App extends Component {
         this.jokeNumHandler = this.jokeNumHandler.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         //fetch('http://api.icndb.com/jokes/random/' + this.state.number)
         fetch('http://api.icndb.com/jokes/random/'
             + this.state.number
@@ -53,52 +53,71 @@ class App extends Component {
         this.setState({
             firstName: event.target.value
         })
-    }
+    };
 
     lastNameHandler = event => {
         this.setState({
             lastName: event.target.value
         })
-    }
+    };
 
     vanillaHandler = event => {
         this.setState({
             firstName: "Chuck",
             lastName: "Norris",
             number: 1
-        }).then(() => this.generateHandler());
+        });
+
+        this.generateHandler();
+
+        this.setState({
+            firstName: "Chuck",
+            lastName: "Norris",
+            number: 1
+        });
     };
 
     render() {
+
+        let i = 1;
         let jokes = (
             <div>
-                {this.state.jokes.map(
+                {this.state.jokes
+                    .map(
+                    element => (i++) + ". " + element)
+                    .map(
                     element => <Joke line={element} />
                 )}
             </div>
         );
 
-        console.log(this.state.jokes);
         return (
-            <div className="App">
+            <div className="App" style={{
+                backgroundImage : 'url('
+                + 'https://www.pngkey.com/png/detail/110-1105091_chuck-norris-chuck-norris-art-black-and-white.png'
+                + ')',
+                justifyContent: "center",
+                position: 'absolute',
+            }}>
                 <h1> Kok's Chuck Norris App</h1>
                 <p> This app is so badass it made Chuck Norris cry like a little baby.</p>
 
-                <p> First name:</p>
+
+                <p> How many Chuck Norris Jokes? </p>
+                <input type='text' id="numInput" onChange={this.jokeNumHandler} placeholder="e.g. 1"/>
+
+                <p> First name(Optional):</p>
                 <input type="text" onChange={this.firstNameHandler} placeholder="e.g. Chuck" />
-                <p>Last name:</p>
+                <p>Last name(Optional):</p>
                 <input type="text" onChange={this.lastNameHandler} placeholder="e.g. Norris" />
 
-                <p> Now, how many Chuck Norris Jokes would you like to generate? </p>
-                <input type='text' id="numInput" onChange={this.jokeNumHandler} placeholder="e.g. 1"/>
                 <br/>
-                <button onClick={this.generateHandler}>Generate</button>
+                <br/>
 
-                <p onClick={this.vanillaHandler}>Just give me a vanilla Chuck Norris Joke!</p>
+                <button onClick={this.generateHandler} >Generate</button>
 
-                <hr />
+                <p onClick={this.vanillaHandler} style={{color:"blue", cursor: "pointer"}}>Just give me a vanilla Chuck Norris Joke!</p>
 
-                <p>{this.state.number}</p>
                 {jokes}
             </div>
         );
